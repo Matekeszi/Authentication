@@ -4,6 +4,11 @@ import com.matekeszi.authentication.domain.UserEntity;
 import com.matekeszi.authentication.exception.UserNotFoundException;
 import com.matekeszi.authentication.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final AuthenticationManager authenticationManager;
 
     @GetMapping("/{id}")
     public UserEntity findById(@PathVariable("id") final long userId) {
@@ -38,5 +44,13 @@ public class UserController {
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable("id") final long userId) {
         userService.deleteById(userId);
+    }
+
+    @PostMapping("/authenticate")
+    public void authenticate(@RequestBody UserEntity userEntity) {
+        Authentication auth = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(userEntity.getUsername(), userEntity.getPassword()));
+        SecurityContext sc = SecurityContextHolder.getContext();
+        sc.setAuthentication(auth);
     }
 }
