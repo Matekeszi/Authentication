@@ -44,7 +44,7 @@ public class UserEntity {
     private String userByDeletedId;
     private String userByUpdatedId;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<UserRoles> roles;
 }

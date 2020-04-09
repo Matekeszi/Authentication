@@ -1,5 +1,6 @@
 package com.matekeszi.authentication.exception;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -20,10 +21,19 @@ public class ExceptionHandlingControllerAdvice {
 
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     protected ResponseEntity<Object> handleException(final HttpMessageNotReadableException ex){
-        return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(
                         ErrorResponse.builder()
                                 .errorMessage("Request body is incorrect!")
+                                .build());
+    }
+
+    @ExceptionHandler(value = EmptyResultDataAccessException.class)
+    protected ResponseEntity<Object> handleException(final EmptyResultDataAccessException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(
+                        ErrorResponse.builder()
+                                .errorMessage(ex.getMessage())
                                 .build());
     }
 }

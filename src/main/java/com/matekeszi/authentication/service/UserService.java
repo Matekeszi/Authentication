@@ -21,15 +21,13 @@ public class UserService {
 
     public void register(UserEntity userEntity) {
         userRepository.save(userEntity);
-        for (UserRoles role : userEntity.getRoles()) {
-            UserRoles userRoles = new UserRoles();
-            userRoles.setUser(userEntity);
-            userRoles.setRoles(role.getRoles());
-            userRoleRepository.save(userRoles);
-        }
     }
 
     public Iterable<UserEntity> findAll() {
         return userRepository.findAll();
+    }
+
+    public void deleteById(long userId) {
+        userRepository.deleteById(userId);
     }
 }
