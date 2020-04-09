@@ -14,4 +14,8 @@ public class UserService {
     public UserEntity findById(final long userId){
         return userRepository.findById(userId);
     }
+
+    public void register(UserEntity userEntity) {
+        userRepository.save(userEntity);
+    }
 }

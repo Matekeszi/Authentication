@@ -6,6 +6,8 @@ import com.matekeszi.authentication.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,5 +22,10 @@ public class UserController {
         UserEntity userEntity = userService.findById(userId);
         if (userEntity == null) throw new UserNotFoundException("There is no user found with id: "+ userId);
         else return userEntity;
+    }
+
+    @PostMapping()
+    public void register(@RequestBody UserEntity userEntity){
+        userService.register(userEntity);
     }
 }
