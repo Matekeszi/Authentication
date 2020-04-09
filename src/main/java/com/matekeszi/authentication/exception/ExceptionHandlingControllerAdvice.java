@@ -20,7 +20,7 @@ public class ExceptionHandlingControllerAdvice {
     }
 
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
-    protected ResponseEntity<Object> handleException(final HttpMessageNotReadableException ex){
+    protected ResponseEntity<Object> handleException(final HttpMessageNotReadableException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(
                         ErrorResponse.builder()
@@ -29,7 +29,7 @@ public class ExceptionHandlingControllerAdvice {
     }
 
     @ExceptionHandler(value = EmptyResultDataAccessException.class)
-    protected ResponseEntity<Object> handleException(final EmptyResultDataAccessException ex){
+    protected ResponseEntity<Object> handleException(final EmptyResultDataAccessException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(
                         ErrorResponse.builder()

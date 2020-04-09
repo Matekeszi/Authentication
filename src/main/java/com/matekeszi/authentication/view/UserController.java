@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
@@ -23,17 +21,17 @@ public class UserController {
     @GetMapping("/{id}")
     public UserEntity findById(@PathVariable("id") final long userId) {
         UserEntity userEntity = userService.findById(userId);
-        if (userEntity == null) throw new UserNotFoundException("There is no user found with id: "+ userId);
+        if (userEntity == null) throw new UserNotFoundException("There is no user found with id: " + userId);
         else return userEntity;
     }
 
     @PostMapping()
-    public void register(@RequestBody UserEntity userEntity){
+    public void register(@RequestBody UserEntity userEntity) {
         userService.register(userEntity);
     }
 
     @GetMapping()
-    public Iterable<UserEntity> findAll(){
+    public Iterable<UserEntity> findAll() {
         return userService.findAll();
     }
 
