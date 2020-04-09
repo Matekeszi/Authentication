@@ -1,8 +1,12 @@
 package com.matekeszi.authentication.view;
 
+import com.matekeszi.authentication.configuration.UserDetailsServiceImpl;
+import com.matekeszi.authentication.domain.TokenEntity;
 import com.matekeszi.authentication.domain.UserEntity;
 import com.matekeszi.authentication.exception.UserNotFoundException;
+import com.matekeszi.authentication.repository.TokenRepository;
 import com.matekeszi.authentication.service.UserService;
+import com.matekeszi.authentication.token.TokenGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,6 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
+    private final UserDetailsServiceImpl userDetailsService;
+    private final TokenRepository tokenRepository;
 
     @GetMapping("/{id}")
     public UserEntity findById(@PathVariable("id") final long userId) {
@@ -47,10 +53,13 @@ public class UserController {
     }
 
     @PostMapping("/authenticate")
-    public void authenticate(@RequestBody UserEntity userEntity) {
+    public String authenticate(@RequestBody UserEntity userEntity) {
         Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(userEntity.getUsername(), userEntity.getPassword()));
         SecurityContext sc = SecurityContextHolder.getContext();
         sc.setAuthentication(auth);
+        String token = TokenGenerator.createToken(userDetailsService.loadUserByUsername(userEntity.getUsername()));
+        tokenRepository.save(TokenGenerator.createTokenEntity(token));
+        return token;
     }
 }

@@ -36,4 +36,13 @@ public class ExceptionHandlingControllerAdvice {
                                 .errorMessage(ex.getMessage())
                                 .build());
     }
+
+    @ExceptionHandler(value = SecurityException.class)
+    protected ResponseEntity<Object> handleException(final SecurityException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(
+                        ErrorResponse.builder()
+                                .errorMessage(ex.getMessage())
+                                .build());
+    }
 }
