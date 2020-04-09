@@ -1,0 +1,36 @@
+{
+  "id": 1,
+  "active": false,
+  "address": null,
+  "createdAt": null,
+  "deletedAt": null,
+  "deletedFlag": false,
+  "email": null,
+  "emailToken": null,
+  "lastLogin": null,
+  "name": null,
+  "nextLoginChangePwd": false,
+  "password": "123",
+  "passwordExpired": false,
+  "phone": null,
+  "settlementId": 0,
+  "tempPassword": null,
+  "tempPasswordExpired": false,
+  "updatedAt": null,
+  "username": "testUser",
+  "userType": null,
+  "settlementsBySettlementId": null,
+  "userByCreatedId": null,
+  "userByDeletedId": null,
+  "userByUpdatedId": null,
+  "roles": [
+    {
+      "id": 2,
+      "roles": "ROLE_ADMIN"
+    },
+    {
+      "id": 3,
+      "roles": "ROLE_PUBLIC"
+    }
+  ]
+}
