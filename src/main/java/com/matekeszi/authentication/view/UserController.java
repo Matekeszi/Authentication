@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
@@ -27,5 +29,10 @@ public class UserController {
     @PostMapping()
     public void register(@RequestBody UserEntity userEntity){
         userService.register(userEntity);
+    }
+
+    @GetMapping()
+    public Iterable<UserEntity> findAll(){
+        return userService.findAll();
     }
 }

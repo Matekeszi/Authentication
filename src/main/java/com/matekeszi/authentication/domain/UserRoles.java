@@ -1,5 +1,6 @@
 package com.matekeszi.authentication.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ public class UserRoles {
     long id;
 
     @ManyToOne
+    @JsonBackReference
     UserEntity user;
 
     Roles roles;
